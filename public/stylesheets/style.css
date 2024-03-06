@@ -1,8 +1,55 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-a {
-  color: #00B7FF;
+h1 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+#activities-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.activity-box {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+nav {
+  background-color: #333;
+  padding: 10px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 15px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #3c74e6;
 }

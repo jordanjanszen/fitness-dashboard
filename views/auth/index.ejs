@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+<!-- <button id="authorizeButton">Authenticate with Strava</button> -->
+<h1>Loading...</h1>
+<script>
+    // document.getElementById('authorizeButton').addEventListener('click', async () => {
+    //     const searchParams = new URLSearchParams(window.location.search);
+    //     const code = searchParams.get("code");
+
+    //     const requestUrl = new URL("/exchange-token", "http:localhost:3000")
+    //     const requestSearchParams = new URLSearchParams({
+    //         code: code,
+    //     })
+    //     try {
+    //         const response = await fetch(requestUrl.toString() + "?" + requestSearchParams.toString())
+    //         window.location.href = "http://localhost:3000/activities";
+    //     } catch (error) {
+    //         console.error(error)
+    //         window.location.href = "http://localhost:3000/";
+    //     }
+    // });
+
+    (async () => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const code = searchParams.get("code");
+
+        const requestUrl = new URL("/exchange-token", "http:localhost:3000")
+        const requestSearchParams = new URLSearchParams({
+            code: code,
+        })
+        try {
+            const response = await fetch(requestUrl.toString() + "?" + requestSearchParams.toString())
+            window.location.href = "http://localhost:3000/activities";
+        } catch (error) {
+            console.error(error)
+            window.location.href = "http://localhost:3000/";
+        }
+    })();
+</script>
+<%- include('../partials/footer') %>
