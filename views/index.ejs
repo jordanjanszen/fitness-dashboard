@@ -19,7 +19,7 @@
         client_id: clientId,
         redirect_uri: redirectUri,
         response_type: "code",
-        scope: "read_all"
+        scope: "read_all,activity:read_all"
       })
       // Redirect users to Strava authorization URL
       window.location.href = `https://www.strava.com/oauth/authorize?${params.toString()}`;

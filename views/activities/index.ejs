@@ -1,225 +1,245 @@
 <%- include('../partials/header') %>
-<script src='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js'></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+<link
+  href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css"
+  rel="stylesheet"
+/>
 <h1>My Fitness Dashboard</h1>
 
-<div class=totals style="width: 100%; display: flex; flex-wrap: wrap; gap: 4rem;">
-  <div id="all_ride_totals">
-  </div>
-  <div id="all_run_totals">
-  </div>
-  <div id="all_swim_totals">
-  </div>
+<div
+  class="totals"
+  style="width: 100%; display: flex; flex-wrap: wrap; gap: 4rem"
+>
+  <div id="all_ride_totals"></div>
+  <div id="all_run_totals"></div>
+  <div id="all_swim_totals"></div>
 </div>
-<div class=YTDtotals style="width: 100%; display: flex; flex-wrap: wrap; gap: 4rem;">
-  <div id="ytd_ride_totals">
-  </div>
-  <div id="ytd_run_totals">
-  </div>
-  <div id="ytd_swim_totals">
-  </div>
+<div
+  class="YTDtotals"
+  style="width: 100%; display: flex; flex-wrap: wrap; gap: 4rem"
+>
+  <div id="ytd_ride_totals"></div>
+  <div id="ytd_run_totals"></div>
+  <div id="ytd_swim_totals"></div>
 </div>
-<div id="records" style="width: 100%; display: flex; flex-wrap: wrap;">
-</div>
-<div id="map" style="width: 50%; height: 400px; margin: 2rem;">
-</div>
+<div id="records" style="width: 100%; display: flex; flex-wrap: wrap"></div>
+<div id="map" style="width: 50%; height: 400px; margin: 2rem"></div>
 
 <script>
-  document.getElementById('map').innerHTML = '';
-  mapboxgl.accessToken = 'pk.eyJ1Ijoiam9yZGFuamFuc3plbiIsImEiOiJjbHRnb3ZqZDMwM20yMmxuc2t6NHdtMzFiIn0.6a17HHbIfKpSiX73U7VS9A';
-  var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [151.1, -33.85],
-    zoom: 9,
-  });
-  map.addControl(new mapboxgl.NavigationControl());
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {    
-    const mockData = {
-    "biggest_ride_distance": 207541,
-    "biggest_climb_elevation_gain": 1533.296,
-    "recent_ride_totals": {
-        "count": 20,
-        "distance": 1185505.6337890625,
-        "moving_time": 149398,
-        "elapsed_time": 160962,
-        "elevation_gain": 15929,
-        "achievement_count": 515
-    },
-    "all_ride_totals": {
-        "count": 876,
-        "distance": 48271425,
-        "moving_time": 6184196,
-        "elapsed_time": 6565459,
-        "elevation_gain": 571663
-    },
-    "recent_run_totals": {
-        "count": 0,
-        "distance": 0,
-        "moving_time": 0,
-        "elapsed_time": 0,
-        "elevation_gain": 0,
-        "achievement_count": 0
-    },
-    "all_run_totals": {
-        "count": 1210,
-        "distance": 10183138,
-        "moving_time": 3181475,
-        "elapsed_time": 3334349,
-        "elevation_gain": 136299
-    },
-    "recent_swim_totals": {
-        "count": 0,
-        "distance": 0,
-        "moving_time": 0,
-        "elapsed_time": 0,
-        "elevation_gain": 0,
-        "achievement_count": 0
-    },
-    "all_swim_totals": {
-        "count": 42,
-        "distance": 117703,
-        "moving_time": 143651,
-        "elapsed_time": 148027,
-        "elevation_gain": 44
-    },
-    "ytd_ride_totals": {
-        "count": 53,
-        "distance": 3965349,
-        "moving_time": 490124,
-        "elapsed_time": 532990,
-        "elevation_gain": 52810
-    },
-    "ytd_run_totals": {
-        "count": 0,
-        "distance": 0,
-        "moving_time": 0,
-        "elapsed_time": 0,
-        "elevation_gain": 0
-    },
-    "ytd_swim_totals": {
-        "count": 0,
-        "distance": 0,
-        "moving_time": 0,
-        "elapsed_time": 0,
-        "elevation_gain": 0
-    }
-  };
-
   /*
-  * containerId: string -> eg. ytd_swim_totals
-  * sectionTitle: string -> eg. YTD Swim Totals
-  * listItems: [string, number][] -> eg. [["Number of swims", 3], ["Distance", 4323]]
-  */
+   * containerId: string -> eg. ytd_swim_totals
+   * sectionTitle: string -> eg. YTD Swim Totals
+   * listItems: [string, number][] -> eg. [["Number of swims", 3], ["Distance", 4323]]
+   */
   const createSection = (containerId, sectionTitle, listItems) => {
     const container = document.getElementById(containerId);
 
-    const title = document.createElement('h2')
+    const title = document.createElement("h2");
     title.innerText = sectionTitle;
-    title.style = "width: 100%; text-align: center"
+    title.style = "width: 100%; text-align: center";
 
     const items = listItems.map((item) => {
-      const listElement = document.createElement('li')
-      listElement.style = "display: flex; gap: 4rem; justify-content: space-between"
-      
-      const listTitle = document.createElement('span')
+      const listElement = document.createElement("li");
+      listElement.style =
+        "display: flex; gap: 4rem; justify-content: space-between";
+
+      const listTitle = document.createElement("span");
       listTitle.innerText = item[0];
 
-      const listValue = document.createElement('span')
+      const listValue = document.createElement("span");
       listValue.innerText = item[1];
 
-      listElement.appendChild(listTitle)
-      listElement.appendChild(listValue)
+      listElement.appendChild(listTitle);
+      listElement.appendChild(listValue);
 
-      return listElement
-    })
-
-    const list = document.createElement('ul');
-    items.forEach(element => {
-      list.appendChild(element)
+      return listElement;
     });
 
-    container.appendChild(title)
-    container.appendChild(list)
-  }
+    const list = document.createElement("ul");
+    items.forEach((element) => {
+      list.appendChild(element);
+    });
 
-  const data = mockData;
-  createSection("all_ride_totals", "All Ride Totals", [
-    ["Number of rides", data.all_ride_totals.count],
-    ["Distance", data.all_ride_totals.distance],
-    ["Moving time", data.all_ride_totals.moving_time],
-    ["Elapsed time", data.all_ride_totals.elapsed_time],
-    ["Elevation gain", data.all_ride_totals.elevation_gain]])
+    container.appendChild(title);
+    container.appendChild(list);
+  };
 
-  createSection("all_run_totals", "All Run Totals", [
-    ["Number of runs", data.all_run_totals.count],
-    ["Distance", data.all_run_totals.distance],
-    ["Moving time", data.all_run_totals.moving_time],
-    ["Elapsed time", data.all_run_totals.elapsed_time],
-    ["Elevation gain", data.all_run_totals.elevation_gain]])
+  // Code taken from @mapbox/polyline
+  const flipped = (coords) => {
+    var flipped = [];
+    for (var i = 0; i < coords.length; i++) {
+      var coord = coords[i].slice();
+      flipped.push([coord[1], coord[0]]);
+    }
+    return flipped;
+  };
 
-    createSection("all_swim_totals", "All Swim Totals", [
-    ["Number of swims", data.all_swim_totals.count],
-    ["Distance", data.all_swim_totals.distance],
-    ["Moving time", data.all_swim_totals.moving_time],
-    ["Elapsed time", data.all_swim_totals.elapsed_time],])
+  // Code taken from @mapbox/polyline
+  const encodedPolylineToGeoJson = (str) => {
+    var index = 0,
+      lat = 0,
+      lng = 0,
+      coordinates = [],
+      shift = 0,
+      result = 0,
+      byte = null,
+      latitude_change,
+      longitude_change,
+      factor = Math.pow(10, 5);
 
-    createSection("ytd_ride_totals", "YTD Ride Totals", [
-    ["Number of rides", data.ytd_ride_totals.count],
-    ["Distance", data.ytd_ride_totals.distance],
-    ["Moving time", data.ytd_ride_totals.moving_time],
-    ["Elapsed time", data.ytd_ride_totals.elapsed_time],])
+    // Coordinates have variable length when encoded, so just keep
+    // track of whether we've hit the end of the string. In each
+    // loop iteration, a single coordinate is decoded.
+    while (index < str.length) {
+      // Reset shift, result, and byte
+      byte = null;
+      shift = 1;
+      result = 0;
 
-    createSection("ytd_run_totals", "YTD Run Totals", [
-    ["Number of runs", data.ytd_run_totals.count],
-    ["Distance", data.ytd_run_totals.distance],
-    ["Moving time", data.ytd_run_totals.moving_time],
-    ["Elapsed time", data.ytd_run_totals.elapsed_time],])
+      do {
+        byte = str.charCodeAt(index++) - 63;
+        result += (byte & 0x1f) * shift;
+        shift *= 32;
+      } while (byte >= 0x20);
 
-    createSection("ytd_swim_totals", "YTD Swim Totals", [
-    ["Number of swims", data.ytd_swim_totals.count],
-    ["Distance", data.ytd_swim_totals.distance],
-    ["Moving time", data.ytd_swim_totals.moving_time],
-    ["Elapsed time", data.ytd_swim_totals.elapsed_time],])
+      latitude_change = result & 1 ? (-result - 1) / 2 : result / 2;
 
-    createSection("records","Personal Records", [
-    ["Longest Ride", data.biggest_ride_distance],
-    ["Biggest Climb", data.biggest_climb_elevation_gain],])
-/*
-},
-    function displayStats(stats) {
-      const statsContainer = document.getElementById('statsContainer');
-  
-      // Clear previous content in the container
-      activitiesContainer.innerHTML = '';
-  
-      activities.forEach(activity => {
-        const activityElement = document.createElement('div');
-        activityElement.classList.add('activity-item'); // Optional: Add a CSS class for styling
-        activityElement.innerHTML = `
-          <h3>${activity.name}</h3>
-          <p><strong>Type:</strong> ${activity.type}</p>
-          <p><strong>Distance:</strong> ${activity.distance} km</p>
-          <p><strong>Start Date:</strong> ${new Date(activity.start_date).toLocaleString()}</p>
-        `;
-        activitiesContainer.appendChild(activityElement);
-      });
+      shift = 1;
+      result = 0;
+
+      do {
+        byte = str.charCodeAt(index++) - 63;
+        result += (byte & 0x1f) * shift;
+        shift *= 32;
+      } while (byte >= 0x20);
+
+      longitude_change = result & 1 ? (-result - 1) / 2 : result / 2;
+
+      lat += latitude_change;
+      lng += longitude_change;
+
+      coordinates.push([lat / factor, lng / factor]);
     }
 
-    (async () => {
+    return {
+      type: "LineString",
+      coordinates: flipped(coordinates),
+    };
+  };
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async function () {
+    // Set up stats
+    const setUpStats = (statsData) => {
+      createSection("all_ride_totals", "All Ride Totals", [
+        ["Number of rides", statsData.all_ride_totals.count],
+        ["Distance", statsData.all_ride_totals.distance],
+        ["Moving time", statsData.all_ride_totals.moving_time],
+        ["Elapsed time", statsData.all_ride_totals.elapsed_time],
+        ["Elevation gain", statsData.all_ride_totals.elevation_gain],
+      ]);
+
+      createSection("all_run_totals", "All Run Totals", [
+        ["Number of runs", statsData.all_run_totals.count],
+        ["Distance", statsData.all_run_totals.distance],
+        ["Moving time", statsData.all_run_totals.moving_time],
+        ["Elapsed time", statsData.all_run_totals.elapsed_time],
+        ["Elevation gain", statsData.all_run_totals.elevation_gain],
+      ]);
+
+      createSection("all_swim_totals", "All Swim Totals", [
+        ["Number of swims", statsData.all_swim_totals.count],
+        ["Distance", statsData.all_swim_totals.distance],
+        ["Moving time", statsData.all_swim_totals.moving_time],
+        ["Elapsed time", statsData.all_swim_totals.elapsed_time],
+      ]);
+
+      createSection("ytd_ride_totals", "YTD Ride Totals", [
+        ["Number of rides", statsData.ytd_ride_totals.count],
+        ["Distance", statsData.ytd_ride_totals.distance],
+        ["Moving time", statsData.ytd_ride_totals.moving_time],
+        ["Elapsed time", statsData.ytd_ride_totals.elapsed_time],
+      ]);
+
+      createSection("ytd_run_totals", "YTD Run Totals", [
+        ["Number of runs", statsData.ytd_run_totals.count],
+        ["Distance", statsData.ytd_run_totals.distance],
+        ["Moving time", statsData.ytd_run_totals.moving_time],
+        ["Elapsed time", statsData.ytd_run_totals.elapsed_time],
+      ]);
+
+      createSection("ytd_swim_totals", "YTD Swim Totals", [
+        ["Number of swims", statsData.ytd_swim_totals.count],
+        ["Distance", statsData.ytd_swim_totals.distance],
+        ["Moving time", statsData.ytd_swim_totals.moving_time],
+        ["Elapsed time", statsData.ytd_swim_totals.elapsed_time],
+      ]);
+
+      createSection("records", "Personal Records", [
+        ["Longest Ride", statsData.biggest_ride_distance],
+        ["Biggest Climb", statsData.biggest_climb_elevation_gain],
+      ]);
+    };
+
+    // Set up map
+    const setUpMap = (activitiesData) => {
+      document.getElementById("map").innerHTML = "";
+      mapboxgl.accessToken =
+        "pk.eyJ1Ijoiam9yZGFuamFuc3plbiIsImEiOiJjbHRnb3ZqZDMwM20yMmxuc2t6NHdtMzFiIn0.6a17HHbIfKpSiX73U7VS9A";
+      var map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: [151.1, -33.85],
+        zoom: 9,
+      });
+      map.addControl(new mapboxgl.NavigationControl());
+
+      map.on("load", () => {
+        activitiesData.forEach((activity) => {
+          if (activity.map.summary_polyline.length < 1) return;
+          map.addSource(activity.id.toString(), {
+            type: "geojson",
+            data: encodedPolylineToGeoJson(activity.map.summary_polyline),
+          });
+          map.addLayer({
+            id: activity.id.toString(),
+            type: "line",
+            source: activity.id.toString(),
+            layout: {
+              "line-join": "round",
+              "line-cap": "round",
+            },
+            paint: {
+              "line-color": "red",
+              "line-width": 3,
+            },
+          });
+        });
+      });
+    };
+
+    const loadStats = async () => {
       try {
-        // const response = await fetch("/api/stats");
-        // const data = await response.json();
-        console.log(mockData);
-        displayStats(mockData)
+        const response = await fetch("/api/stats");
+        const data = await response.json();
+        setUpStats(data);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-  })();
-  */
-})
+    };
+    await loadStats();
+
+    const loadActivities = async () => {
+      try {
+        const response = await fetch("/api/activities");
+        const data = await response.json();
+        setUpMap(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    await loadActivities();
+  });
 </script>
 <%- include('../partials/footer') %>

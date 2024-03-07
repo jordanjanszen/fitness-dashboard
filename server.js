@@ -72,12 +72,31 @@ app.get('/exchange-token', async (req, res) => {
 });
 
 // Fetch activities from Strava
+app.get('/api/activities', async (req, res) => {
+  try {
+    const accessToken = req.cookies.accessToken;
+
+    const activitiesResponse = await axios.get(`https://www.strava.com/api/v3/athlete/activities?per_page=100`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+
+    const activities = activitiesResponse.data;
+    res.json(activities);
+  } catch (error) {
+    console.error('Error fetching Strava activities:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Fetch stats from Strava
 app.get('/api/stats', async (req, res) => {
   try {
     const accountId = req.cookies.accountId;
     const accessToken = req.cookies.accessToken;
 
-    const statsResponse = await axios.get(`https://www.strava.com/api/v3//athletes/${accountId}/stats`, {
+    const statsResponse = await axios.get(`https://www.strava.com/api/v3/athletes/${accountId}/stats`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
@@ -86,7 +105,7 @@ app.get('/api/stats', async (req, res) => {
     const stats = statsResponse.data;
     res.json(stats);
   } catch (error) {
-    console.error('Error fetching Strava activities:', error);
+    console.error('Error fetching Strava stats:', error);
     res.status(500).send('Internal Server Error');
   }
 });
