@@ -13,17 +13,32 @@ body {
 h1 {
   text-align: center;
   margin-top: 4rem;
-  font-size: 2rem;
+  font: inherit;
+	background-color: #f0f0f0;
+	border: 0;
+	color: #242424;
+	border-radius: 0.5em;
+	font-size: 3rem;
+	padding: 0.375em 1em;
+	font-weight: 600;
+	text-shadow: 0 0.0625em 0 #fff;
+	box-shadow: inset 0 0.0625em 0 0 #f4f4f4, 0 0.0625em 0 0 #efefef,
+		0 0.125em 0 0 #ececec, 0 0.25em 0 0 #e0e0e0, 0 0.3125em 0 0 #dedede,
+		0 0.375em 0 0 #dcdcdc, 0 0.425em 0 0 #cacaca, 0 0.425em 0.5em 0 #cecece;
 }
 
 h2 {
   font-size: 1.2rem;
+  font-weight: 600;
+	text-shadow: 0 0.0625em 0 #fff;
 }
 
 #buttonContainer {
   text-align: center;
   justify-content: center;
-  margin-top: 4rem;
+  position: absolute;
+  top: 35%;
+  width: 50%;
 }
 
 button {
@@ -100,4 +115,8 @@ nav a {
 
 nav a:hover {
   text-decoration: underline;
+}
+
+#map {
+  border-radius: 5%;
 }

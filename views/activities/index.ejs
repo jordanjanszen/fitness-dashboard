@@ -1,4 +1,6 @@
 <%- include('../partials/header') %>
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
 <h1>My Fitness Dashboard</h1>
 
 <div class=totals style="width: 100%; display: flex; flex-wrap: wrap; gap: 4rem;">
@@ -19,6 +21,20 @@
 </div>
 <div id="records" style="width: 100%; display: flex; flex-wrap: wrap;">
 </div>
+<div id="map" style="width: 50%; height: 400px; margin: 2rem;">
+</div>
+
+<script>
+  document.getElementById('map').innerHTML = '';
+  mapboxgl.accessToken = 'pk.eyJ1Ijoiam9yZGFuamFuc3plbiIsImEiOiJjbHRnb3ZqZDMwM20yMmxuc2t6NHdtMzFiIn0.6a17HHbIfKpSiX73U7VS9A';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [151.1, -33.85],
+    zoom: 9,
+  });
+  map.addControl(new mapboxgl.NavigationControl());
+</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {    
