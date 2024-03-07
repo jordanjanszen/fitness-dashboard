@@ -28,7 +28,7 @@ Welcome to My Fitness Dashboard, your personalized hub for tracking and visualiz
 
 - **Mapping**: Utilizes the MapBox API to render interactive and visually appealing maps.
 
-![My Fitness Dashboard Screenshot](/public/images/screenshot.png)
+![My Fitness Dashboard Screenshot](/images/screenshot.png)
 
 ## Contributions
 
