@@ -3,31 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="/public/stylesheets/style.css"> -->
-    <title>Home Page</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>Fitness Dashboard</title>
 </head>
 <body>
     <nav>
         <a href="/">Home</a>
     </nav>
-
-<button id="authorizeButton">Connect to Strava</button>
-<script>
-  document.getElementById('authorizeButton').addEventListener('click', () => {
-    const clientId = '122558';
-    const redirectUri = 'http://localhost:3000/auth';
-    const params = new URLSearchParams({
-      client_id: clientId,
-      redirect_uri: redirectUri,
-      response_type: "code",
-      scope: "read_all"
-    })
-    // Redirect users to Strava authorization URL
-    window.location.href = `https://www.strava.com/oauth/authorize?${params.toString()}`;
-    // https://www.strava.com/oauth/authorize?client_id=122558&redirect_uri=http://localhost:3000/activities&response_type=code&scope=activity:read_all
-    // https://www.strava.com/oauth/token?client_id=122558&client_secret=4c74496ebcdbc71208a986f2116f9c851331e503code=fd0def705d6735f9bbde569d196c7eb87f3b2c39&grant_type=authorization_code
-    // https://www.strava.com/api/v3/athlete/activities?access_token=0891632afc4b11559ff0e637177c44633ab2c1a8
-  });
-</script>
+<div id="buttonContainer"><button id="authorizeButton">Connect to Strava</button>
+  <script>
+    document.getElementById('authorizeButton').addEventListener('click', () => {
+      const clientId = '122558';
+      const redirectUri = 'http://localhost:3000/auth';
+      const params = new URLSearchParams({
+        client_id: clientId,
+        redirect_uri: redirectUri,
+        response_type: "code",
+        scope: "read_all"
+      })
+      // Redirect users to Strava authorization URL
+      window.location.href = `https://www.strava.com/oauth/authorize?${params.toString()}`;
+      // https://www.strava.com/oauth/authorize?client_id=122558&redirect_uri=http://localhost:3000/activities&response_type=code&scope=activity:read_all
+      // https://www.strava.com/oauth/token?client_id=122558&client_secret=4c74496ebcdbc71208a986f2116f9c851331e503code=fd0def705d6735f9bbde569d196c7eb87f3b2c39&grant_type=authorization_code
+      // https://www.strava.com/api/v3/athlete/activities?access_token=0891632afc4b11559ff0e637177c44633ab2c1a8
+    });
+  </script></div>
 
 <%- include('./partials/footer') %>

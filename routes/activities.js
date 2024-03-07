@@ -8,8 +8,8 @@ router.get('/', activitiesController.index);
 
 router.get('/activities', async (req, res) => {
     try {
-      // Assuming the access token is available in the request object
-      const accessToken = req.user.accessToken; // Adjust this based on your authentication setup
+    
+      const accessToken = req.user.accessToken;
   
       // Make the API request to Strava to get activities
       const response = await axios.get('https://www.strava.com/api/v3/athlete/activities', {

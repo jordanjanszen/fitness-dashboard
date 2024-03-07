@@ -1,8 +1,6 @@
 <%- include('../partials/header') %>
 <h1>My Fitness Dashboard</h1>
-<div class="records">
 
-</div>
 <div class=totals style="width: 100%; display: flex; flex-wrap: wrap; gap: 4rem;">
   <div id="all_ride_totals">
   </div>
@@ -18,6 +16,8 @@
   </div>
   <div id="ytd_swim_totals">
   </div>
+</div>
+<div id="records" style="width: 100%; display: flex; flex-wrap: wrap;">
 </div>
 
 <script>
@@ -168,6 +168,10 @@ document.addEventListener('DOMContentLoaded', function () {
     ["Distance", data.ytd_swim_totals.distance],
     ["Moving time", data.ytd_swim_totals.moving_time],
     ["Elapsed time", data.ytd_swim_totals.elapsed_time],])
+
+    createSection("records","Personal Records", [
+    ["Longest Ride", data.biggest_ride_distance],
+    ["Biggest Climb", data.biggest_climb_elevation_gain],])
 /*
 },
     function displayStats(stats) {
@@ -202,5 +206,4 @@ document.addEventListener('DOMContentLoaded', function () {
   */
 })
 </script>
-<div id="goalsContainer">My Goals</div>
 <%- include('../partials/footer') %>
